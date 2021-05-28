@@ -5990,6 +5990,68 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
+/***/ 227:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+const core = __nccwpck_require__(186)
+
+/**
+ * createNewPullRequest
+ * --------------------
+ * Create a new pull request inside your repository based to params passed to this function.
+ * 
+ * @param {Instance} octokit Instance of octokit library
+ * @param {Object} params Object with params to filter pulls list
+ * @property {String} params.owner Repository owner user name
+ * @property {String} params.repo Repository name
+ * @property {String} params.body Pull request body content
+ * @property {String} params.title Pull request title
+ * @property {String} params.head Branch where you want to pull the new code
+ * @property {String} params.base Branch you want to update
+ * 
+ * @returns {Object} Object with opened pull request or undefined.
+ */
+ async function createNewPullRequest (octokit, params) {
+    const { data: createdPullRequest } = await octokit.rest.pulls.create(params)
+    core.info(`Pull request #${createdPullRequest.number} created successfully!`)
+    core.setOutput("PULL_REQUEST_URL", createdPullRequest.url)
+}
+
+module.exports = createNewPullRequest
+
+
+/***/ }),
+
+/***/ 562:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+const core = __nccwpck_require__(186)
+
+/**
+ * getPullsListByBranch
+ * --------------------
+ * Get a filtered list of opened pull requests by branch.
+ * 
+ * @function
+ * @param {Instance} octokit Instance of octokit library
+ * @param {Object} params Object with params to filter pulls list
+ * @property {String} params.owner The repository owner user name
+ * @property {String} params.repo The repository name
+ * @property {String} params.head The name of branch to use to filter pulls list
+ * @returns {Object} Object with opened pull request or undefined.
+ */
+async function getPullsListByBranch (octokit, params) {
+    core.info('Verifying if already exist opened pull request.')
+
+    const { data } = await octokit.rest.pulls.list(params)
+    return data.find(pull => pull.state === 'open')
+}
+
+module.exports = getPullsListByBranch
+
+
+/***/ }),
+
 /***/ 877:
 /***/ ((module) => {
 
@@ -6141,41 +6203,62 @@ module.exports = require("zlib");;
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-const core = __nccwpck_require__(186);
-const github = __nccwpck_require__(438);
+const core = __nccwpck_require__(186)
+const github = __nccwpck_require__(438)
 
-// Criar validação para verificar se pull request já existe
+const getPullsListByBranch = __nccwpck_require__(562)
+const createNewPullRequest = __nccwpck_require__(227)
 
 async function run() {
   const GITHUB_TOKEN = core.getInput('GITHUB_TOKEN')
-  const BASE_BRANCH = core.getInput('BASE_BRANCH')
-  const FROM_BRANCH = core.getInput('FROM_BRANCH')
+  const SOURCE_BRANCH = core.getInput('SOURCE_BRANCH')
+  const DESTINATION_BRANCH = core.getInput('DESTINATION_BRANCH')
   const PULL_REQUEST_TITLE = core.getInput('PULL_REQUEST_TITLE')
   const PULL_REQUEST_BODY = core.getInput('PULL_REQUEST_BODY')
 
   const octokit = github.getOctokit(GITHUB_TOKEN)
   const { repository } = github.context.payload
 
-  try {
-    const title = PULL_REQUEST_TITLE || `
-      update: ${FROM_BRANCH} to ${TO_BRANCH}
-    `
-    const body = PULL_REQUEST_BODY || `
-      This is an automatic Pull Request to keep ${BASE_BRANCH} up to date with ${FROM_BRANCH}!
-    `
+  core.info('Starting process to make a new pull request...')
 
-    if (!BASE_BRANCH || !FROM_BRANCH) {
-      throw new Error('You need to enter a valid value in the "BASE_BRANCH" and "FROM_BRANCH" fields.')
+  try {
+    core.info('Verifying if required fields is setted.')
+    if (!SOURCE_BRANCH || !DESTINATION_BRANCH) {
+      throw new Error('You need to enter a valid value in the "SOURCE_BRANCH" and "DESTINATION_BRANCH" fields.')
     }
 
-    await octokit.rest.pulls.create({
-      owner: repository.owner.login,
-      repo: repository.name,
-      head: FROM_BRANCH,
-      base: BASE_BRANCH,
-      title,
-      body,
+    const repo = repository.name
+    const owner = repository.owner.login
+
+    const title = PULL_REQUEST_TITLE || `
+      update: ${DESTINATION_BRANCH} to ${SOURCE_BRANCH}
+    `
+    const body = PULL_REQUEST_BODY || `
+      This is an automatic Pull Request to keep ${DESTINATION_BRANCH} up to date with ${SOURCE_BRANCH}! 🔄
+    `
+
+    const openPullRequest = await getPullsListByBranch(octokit, {
+      owner,
+      repo,
+      head: SOURCE_BRANCH,
     })
+
+    if (!openPullRequest) {
+      const params = {
+        owner,
+        repo,
+        body,
+        title,
+        head: SOURCE_BRANCH,
+        base: DESTINATION_BRANCH,
+      }
+
+      await createNewPullRequest(octokit, params)
+      return
+    }
+
+    core.info(`A pull request has already been opened to update the ${DESTINATION_BRANCH} branch`)
+    core.setOutput("PULL_REQUEST_URL", openPullRequest.url)
   } catch (error) {
     core.setFailed(error.message)
   }
