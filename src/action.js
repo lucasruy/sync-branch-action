@@ -27,7 +27,6 @@ async function run() {
 
     await octokit.rest.pulls.create({
       owner: repository.owner.login,
-      repo: repository.name,
       head: DESTINATION_BRANCH,
       base: SOURCE_BRANCH,
       title,
