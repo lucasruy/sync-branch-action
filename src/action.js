@@ -16,6 +16,9 @@ async function run() {
   core.info('Starting process to make a new pull request...')
 
   try {
+    const repo = repository.name
+    const owner = repository.owner.login
+
     const title = PULL_REQUEST_TITLE || `
       update: ${DESTINATION_BRANCH} to ${SOURCE_BRANCH}
     `
@@ -27,13 +30,21 @@ async function run() {
       throw new Error('You need to enter a valid value in the "SOURCE_BRANCH" and "DESTINATION_BRANCH" fields.')
     }
 
+    const { data } = await octokit.rest.pulls.list({
+      owner,
+      repo,
+      head: SOURCE_BRANCH,
+    })
+
+    console.log('data:', data)
+
     const { data: { url, number } } = await octokit.rest.pulls.create({
-      owner: repository.owner.login,
-      repo: repository.name,
+      owner,
+      repo,
+      body,
+      title,
       head: SOURCE_BRANCH,
       base: DESTINATION_BRANCH,
-      title,
-      body,
     })
 
     core.info(`Pull request #${number} created successfully!`)
