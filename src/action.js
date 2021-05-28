@@ -17,6 +17,11 @@ async function run() {
   core.info('Starting process to make a new pull request...')
 
   try {
+    core.info('Validating if required fields is setted.')
+    if (!SOURCE_BRANCH || !DESTINATION_BRANCH) {
+      throw new Error('You need to enter a valid value in the "SOURCE_BRANCH" and "DESTINATION_BRANCH" fields.')
+    }
+
     const repo = repository.name
     const owner = repository.owner.login
 
@@ -24,12 +29,8 @@ async function run() {
       update: ${DESTINATION_BRANCH} to ${SOURCE_BRANCH}
     `
     const body = PULL_REQUEST_BODY || `
-      This is an automatic Pull Request to keep ${DESTINATION_BRANCH} up to date with ${SOURCE_BRANCH}!
+      This is an automatic Pull Request to keep ${DESTINATION_BRANCH} up to date with ${SOURCE_BRANCH}! 🔄
     `
-
-    if (!SOURCE_BRANCH || !DESTINATION_BRANCH) {
-      throw new Error('You need to enter a valid value in the "SOURCE_BRANCH" and "DESTINATION_BRANCH" fields.')
-    }
 
     const openPullRequest = await getPullsListByBranch(octokit, {
       owner,

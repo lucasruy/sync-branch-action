@@ -1,3 +1,5 @@
+const core = require('@actions/core')
+
 /**
  * createNewPullRequest
  * --------------------
