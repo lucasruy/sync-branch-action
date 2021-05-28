@@ -15,9 +15,10 @@ async function run() {
 
   console.log('Start making a new pull request process...')
 
-  console.log('repository:', repository)
+  console.log('repository.owner.login:', repository.owner.login)
   console.log('repository.name:', repository.name)
-  console.log('github.context:', github.context)
+  console.log('DESTINATION_BRANCH:', DESTINATION_BRANCH)
+  console.log('SOURCE_BRANCH:', SOURCE_BRANCH)
 
   try {
     const title = PULL_REQUEST_TITLE || `
@@ -31,7 +32,7 @@ async function run() {
       throw new Error('You need to enter a valid value in the "SOURCE_BRANCH" and "DESTINATION_BRANCH" fields.')
     }
 
-    const data = await octokit.pulls.create({
+    const data = await octokit.rest.pulls.create({
       owner: repository.owner.login,
       repo: repository.name,
       head: DESTINATION_BRANCH,
