@@ -35,8 +35,8 @@ async function run() {
     const data = await octokit.rest.pulls.create({
       owner: repository.owner.login,
       repo: repository.name,
-      head: DESTINATION_BRANCH,
-      base: SOURCE_BRANCH,
+      head: SOURCE_BRANCH,
+      base: DESTINATION_BRANCH,
       title,
       body,
     })
