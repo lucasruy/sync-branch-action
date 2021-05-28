@@ -30,25 +30,31 @@ async function run() {
       throw new Error('You need to enter a valid value in the "SOURCE_BRANCH" and "DESTINATION_BRANCH" fields.')
     }
 
-    const { data } = await octokit.rest.pulls.list({
+    const { data: pullRequestsByBranch } = await octokit.rest.pulls.list({
       owner,
       repo,
       head: SOURCE_BRANCH,
     })
 
-    console.log('data:', data)
+    const hasOpenPullRequest = pullRequestsByBranch.find(pull => pull.state === 'open')
 
-    const { data: { url, number } } = await octokit.rest.pulls.create({
-      owner,
-      repo,
-      body,
-      title,
-      head: SOURCE_BRANCH,
-      base: DESTINATION_BRANCH,
-    })
+    if (!hasOpenPullRequest) {
+      const { data: createdPullRequest } = await octokit.rest.pulls.create({
+        owner,
+        repo,
+        body,
+        title,
+        head: SOURCE_BRANCH,
+        base: DESTINATION_BRANCH,
+      })
+  
+      core.info(`Pull request #${createdPullRequest.number} created successfully!`)
+      core.setOutput("PULL_REQUEST_URL", createdPullRequest.url)
+      return
+    }
 
-    core.info(`Pull request #${number} created successfully!`)
-    core.setOutput("PULL_REQUEST_URL", url)
+    core.info(`Pull request #${pullRequestsByBranch.number} has already been opened to update the ${DESTINATION_BRANCH} branch`)
+    core.setOutput("PULL_REQUEST_URL", pullRequestsByBranch.url)
   } catch (error) {
     core.setFailed(error.message)
   }
