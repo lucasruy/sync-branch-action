@@ -17,7 +17,7 @@ async function run() {
   core.info('Starting process to make a new pull request...')
 
   try {
-    core.info('Validating if required fields is setted.')
+    core.info('Verifying if required fields is setted.')
     if (!SOURCE_BRANCH || !DESTINATION_BRANCH) {
       throw new Error('You need to enter a valid value in the "SOURCE_BRANCH" and "DESTINATION_BRANCH" fields.')
     }
