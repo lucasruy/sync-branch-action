@@ -1,0 +1,20 @@
+{
+  "name": "sync-branch-action",
+  "version": "1.0.0",
+  "description": "Action to update branchs automatically.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LucasRuy/sync-branch-action.git"
+  },
+  "keywords": ["actions", "github"],
+  "author": "Lucas Ruy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LucasRuy/sync-branch-action/issues"
+  },
+  "homepage": "https://github.com/LucasRuy/sync-branch-action#readme"
+}
