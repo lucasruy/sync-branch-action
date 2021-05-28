@@ -6156,6 +6156,12 @@ async function run() {
   const octokit = github.getOctokit(GITHUB_TOKEN)
   const { repository } = github.context.payload
 
+  console.log('Start making a new pull request process...')
+
+  console.log('repository:', repository)
+  console.log('repository.name:', repository.name)
+  console.log('github.context:', github.context)
+
   try {
     const title = PULL_REQUEST_TITLE || `
       update: ${DESTINATION_BRANCH} to ${SOURCE_BRANCH}
@@ -6168,7 +6174,7 @@ async function run() {
       throw new Error('You need to enter a valid value in the "SOURCE_BRANCH" and "DESTINATION_BRANCH" fields.')
     }
 
-    await octokit.rest.pulls.create({
+    const data = await octokit.pulls.create({
       owner: repository.owner.login,
       repo: repository.name,
       head: DESTINATION_BRANCH,
@@ -6176,6 +6182,8 @@ async function run() {
       title,
       body,
     })
+
+    console.log('data:', data)
   } catch (error) {
     core.setFailed(error.message)
   }
