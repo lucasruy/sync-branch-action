@@ -6158,7 +6158,7 @@ async function run() {
 
   try {
     const title = PULL_REQUEST_TITLE || `
-      update: ${DESTINATION_BRANCH} to ${TO_BRANCH}
+      update: ${DESTINATION_BRANCH} to ${SOURCE_BRANCH}
     `
     const body = PULL_REQUEST_BODY || `
       This is an automatic Pull Request to keep ${SOURCE_BRANCH} up to date with ${DESTINATION_BRANCH}!
