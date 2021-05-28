@@ -4,11 +4,20 @@ author: 'Lucas Ruy'
 
 inputs:
   GITHUB_TOKEN:
-    description: 'GitHub token'
+    description: 'User token to be associated with this pull request.'
     required: true
-  TENOR_TOKEN:
-    description: 'Tenor API token'
+  SOURCE_BRANCH:
+    description: 'Branch to merge code.'
     required: true
+  DESTINATION_BRANCH:
+    description: 'Source branch to get code'
+    required: true
+  PULL_REQUEST_TITLE:
+    description: 'Pull Request title. Default is: "update: {FROM_BRANCH} to {TO_BRANCH}"'
+    required: false
+  PULL_REQUEST_BODY:
+    description: 'Body for your PullRequest if you want to include a custom one. Default is: "This is an automatic PullRequest to keep {BASE_BRANCH} up to date with {FROM_BRANCH}!"'
+    required: false
 
 runs:
   using: 'node12'

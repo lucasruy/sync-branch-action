@@ -1,8 +1,9 @@
 name: Test
 
 on:
-  pull_request:
-    types: [opened]
+  push:
+    branches:
+      - main
 
 jobs:
   test:
@@ -10,3 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ./
+        with:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          SOURCE_BRANCH: 'main'
+          DESTINATION_BRANCH: 'develop'
