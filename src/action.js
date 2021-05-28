@@ -2,8 +2,7 @@ const core = require('@actions/core')
 const github = require('@actions/github')
 
 const getPullsListByBranch = require('./get-pulls-list')
-
-// Criar validação para verificar se pull request já existe
+const createNewPullRequest = require('./create-new-pull')
 
 async function run() {
   const GITHUB_TOKEN = core.getInput('GITHUB_TOKEN')
@@ -39,17 +38,16 @@ async function run() {
     })
 
     if (!openPullRequest) {
-      const { data: createdPullRequest } = await octokit.rest.pulls.create({
+      const params = {
         owner,
         repo,
         body,
         title,
         head: SOURCE_BRANCH,
         base: DESTINATION_BRANCH,
-      })
-  
-      core.info(`Pull request #${createdPullRequest.number} created successfully!`)
-      core.setOutput("PULL_REQUEST_URL", createdPullRequest.url)
+      }
+
+      await createNewPullRequest(octokit, params)
       return
     }
 
