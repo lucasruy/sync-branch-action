@@ -5990,6 +5990,29 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
+/***/ 562:
+/***/ ((module) => {
+
+/**
+ * Get a filtered list of opened pull requests by branch.
+ * @function
+ * @param {InstanceType} octokit Instance of octokit library
+ * @param {Object} params Object with params to filter pulls list
+ * @property {String} params.owner The repository owner user name
+ * @property {String} params.repo The repository name
+ * @property {String} params.head The name of branch to use to filter pulls list
+ * @returns {Object} Object with opened pull request or undefined.
+ */
+async function getPullsListByBranch (octokit, params) {
+    const { data } = await octokit.rest.pulls.list(params)
+    return data.find(pull => pull.state === 'open')
+}
+
+module.exports = getPullsListByBranch
+
+
+/***/ }),
+
 /***/ 877:
 /***/ ((module) => {
 
@@ -6141,8 +6164,10 @@ module.exports = require("zlib");;
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-const core = __nccwpck_require__(186);
-const github = __nccwpck_require__(438);
+const core = __nccwpck_require__(186)
+const github = __nccwpck_require__(438)
+
+const getPullsListByBranch = __nccwpck_require__(562)
 
 // Criar validação para verificar se pull request já existe
 
@@ -6173,15 +6198,13 @@ async function run() {
       throw new Error('You need to enter a valid value in the "SOURCE_BRANCH" and "DESTINATION_BRANCH" fields.')
     }
 
-    const { data: pullRequestsByBranch } = await octokit.rest.pulls.list({
+    const openPullRequest = await getPullsListByBranch(octokit, {
       owner,
       repo,
       head: SOURCE_BRANCH,
     })
 
-    const hasOpenPullRequest = pullRequestsByBranch.find(pull => pull.state === 'open')
-
-    if (!hasOpenPullRequest) {
+    if (!openPullRequest) {
       const { data: createdPullRequest } = await octokit.rest.pulls.create({
         owner,
         repo,
@@ -6196,8 +6219,8 @@ async function run() {
       return
     }
 
-    core.info(`Pull request #${pullRequestsByBranch.number} has already been opened to update the ${DESTINATION_BRANCH} branch`)
-    core.setOutput("PULL_REQUEST_URL", pullRequestsByBranch.url)
+    core.info(`A pull request has already been opened to update the ${DESTINATION_BRANCH} branch`)
+    core.setOutput("PULL_REQUEST_URL", openPullRequest.url)
   } catch (error) {
     core.setFailed(error.message)
   }

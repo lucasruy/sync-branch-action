@@ -1,5 +1,7 @@
-const core = require('@actions/core');
-const github = require('@actions/github');
+const core = require('@actions/core')
+const github = require('@actions/github')
+
+const getPullsListByBranch = require('./get-pulls-list')
 
 // Criar validação para verificar se pull request já existe
 
@@ -30,15 +32,13 @@ async function run() {
       throw new Error('You need to enter a valid value in the "SOURCE_BRANCH" and "DESTINATION_BRANCH" fields.')
     }
 
-    const { data: pullRequestsByBranch } = await octokit.rest.pulls.list({
+    const openPullRequest = await getPullsListByBranch(octokit, {
       owner,
       repo,
       head: SOURCE_BRANCH,
     })
 
-    const hasOpenPullRequest = pullRequestsByBranch.find(pull => pull.state === 'open')
-
-    if (!hasOpenPullRequest) {
+    if (!openPullRequest) {
       const { data: createdPullRequest } = await octokit.rest.pulls.create({
         owner,
         repo,
@@ -53,8 +53,8 @@ async function run() {
       return
     }
 
-    core.info(`Pull request #${pullRequestsByBranch.number} has already been opened to update the ${DESTINATION_BRANCH} branch`)
-    core.setOutput("PULL_REQUEST_URL", pullRequestsByBranch.url)
+    core.info(`A pull request has already been opened to update the ${DESTINATION_BRANCH} branch`)
+    core.setOutput("PULL_REQUEST_URL", openPullRequest.url)
   } catch (error) {
     core.setFailed(error.message)
   }
