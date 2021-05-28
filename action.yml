@@ -19,6 +19,10 @@ inputs:
     description: 'Body for your PullRequest if you want to include a custom one. Default is: "This is an automatic PullRequest to keep {BASE_BRANCH} up to date with {FROM_BRANCH}!"'
     required: false
 
+outputs:
+  PULL_REQUEST_URL:
+    description: "The url of the generated pull request."
+
 runs:
   using: 'node12'
   main: 'dist/index.js'

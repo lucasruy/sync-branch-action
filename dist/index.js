@@ -6156,26 +6156,21 @@ async function run() {
   const octokit = github.getOctokit(GITHUB_TOKEN)
   const { repository } = github.context.payload
 
-  console.log('Start making a new pull request process...')
-
-  console.log('repository.owner.login:', repository.owner.login)
-  console.log('repository.name:', repository.name)
-  console.log('DESTINATION_BRANCH:', DESTINATION_BRANCH)
-  console.log('SOURCE_BRANCH:', SOURCE_BRANCH)
+  core.info('Starting process to make a new pull request...')
 
   try {
     const title = PULL_REQUEST_TITLE || `
       update: ${DESTINATION_BRANCH} to ${SOURCE_BRANCH}
     `
     const body = PULL_REQUEST_BODY || `
-      This is an automatic Pull Request to keep ${SOURCE_BRANCH} up to date with ${DESTINATION_BRANCH}!
+      This is an automatic Pull Request to keep ${DESTINATION_BRANCH} up to date with ${SOURCE_BRANCH}!
     `
 
     if (!SOURCE_BRANCH || !DESTINATION_BRANCH) {
       throw new Error('You need to enter a valid value in the "SOURCE_BRANCH" and "DESTINATION_BRANCH" fields.')
     }
 
-    const data = await octokit.rest.pulls.create({
+    const { data: { url, number } } = await octokit.rest.pulls.create({
       owner: repository.owner.login,
       repo: repository.name,
       head: SOURCE_BRANCH,
@@ -6184,7 +6179,8 @@ async function run() {
       body,
     })
 
-    console.log('data:', data)
+    core.info(`Pull request #${number} created successfully!`)
+    core.setOutput("PULL_REQUEST_URL", url)
   } catch (error) {
     core.setFailed(error.message)
   }
