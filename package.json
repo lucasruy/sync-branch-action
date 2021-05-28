@@ -4,17 +4,27 @@
   "description": "Action to update branchs automatically.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "ncc build src/action.js -o dist"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/LucasRuy/sync-branch-action.git"
   },
-  "keywords": ["actions", "github"],
+  "keywords": [
+    "actions",
+    "github"
+  ],
   "author": "Lucas Ruy",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/LucasRuy/sync-branch-action/issues"
   },
-  "homepage": "https://github.com/LucasRuy/sync-branch-action#readme"
+  "homepage": "https://github.com/LucasRuy/sync-branch-action#readme",
+  "dependencies": {
+    "@actions/core": "^1.3.0",
+    "@actions/github": "^5.0.0"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.28.6"
+  }
 }
