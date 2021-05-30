@@ -7,16 +7,16 @@ inputs:
     description: 'User token to be associated with this pull request.'
     required: true
   SOURCE_BRANCH:
-    description: 'Branch to merge code.'
+    description: 'Branch where you implemented your new code.'
     required: true
   DESTINATION_BRANCH:
-    description: 'Source branch to get code'
+    description: 'Branch you want to send your new code.'
     required: true
   PULL_REQUEST_TITLE:
-    description: 'Pull Request title. Default is: "update: {FROM_BRANCH} to {TO_BRANCH}"'
+    description: 'Standard title for your update pull request. Default is: "update: {FROM_BRANCH} to {TO_BRANCH}"'
     required: false
   PULL_REQUEST_BODY:
-    description: 'Body for your PullRequest if you want to include a custom one. Default is: "This is an automatic PullRequest to keep {BASE_BRANCH} up to date with {FROM_BRANCH}!"'
+    description: 'Content with description for your automated pull. Default is: "This is an automatic PullRequest to keep {BASE_BRANCH} up to date with {FROM_BRANCH}!"'
     required: false
 
 outputs:
