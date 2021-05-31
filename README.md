@@ -1,12 +1,13 @@
-# Sync Branch Action
+# This is a W.I.P project
+## Sync Branch Action
 An action to automate your branch update process. This action opens a pull request automatically for you whenever there are changes in a branch that you want to observe.
 
-# Features
+## Features
  - Open a pull request whenever there are changes to a branch you want to observe.
  - Before opening a new pull request, check if there is already an open one with the same purpose. If so, a new pull request is not opened.
  - If a pull request is already open and there are changes to the observed branch, those changes are automatically included in the pull request already open.
 
-# Inputs
+## Inputs
 |     Name     |     Type    |   Required  |    Description    |
 | --------------- |    :----:   |    :----:   | ----------------- |
 | GITHUB_TOKEN |    String   |     true    | User token to be associated with this pull request. |
@@ -14,12 +15,12 @@ An action to automate your branch update process. This action opens a pull reque
 | DESTINATION_BRANCH | String | true | Branch you want to send your new code. |
 | PULL_REQUEST_TITLE | String | false | Standard title for your update pull request. Default is: `"update: {FROM_BRANCH} to {TO_BRANCH}"` |
 | PULL_REQUEST_BODY | String | false | Content with description for your automated pull. Default is: `"This is an automatic PullRequest to keep {BASE_BRANCH} up to date with {FROM_BRANCH}!"` |
-# Outputs
+## Outputs
 |     Name     |     Type    |    Description    |
 | --------------- |    :----:   | ----------------- |
 | PULL_REQUEST_URL |    String   | The url of the generated pull request. |
 
-# Usage example
+## Usage example
 Usage example for simple cases.
 ```
 name: Update Branch
@@ -70,6 +71,6 @@ jobs:
           PULL_REQUEST_BODY: 'Custom body of my auto update pull request.'
 ```
 
-# Next steps [to-do]
+## Next steps [to-do]
 New possible features for this action. Ideas are welcome.
 - Include the possibility of including in the description of the automatic PR, which branches or PR's merged into the observed branch.
