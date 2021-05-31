@@ -1,6 +1,11 @@
 # Sync Branch Action
 An action to automate your branch update process. This action opens a pull request automatically for you whenever there are changes in a branch that you want to observe.
 
+# Features
+ - Open a pull request whenever there are changes to a branch you want to observe.
+ - Before opening a new pull request, check if there is already an open one with the same purpose. If so, a new pull request is not opened.
+ - If a pull request is already open and there are changes to the observed branch, those changes are automatically included in the pull request already open.
+
 # Inputs
 |     Name     |     Type    |   Required  |    Description    |
 | --------------- |    :----:   |    :----:   | ----------------- |
@@ -64,3 +69,7 @@ jobs:
           PULL_REQUEST_TITLE: 'sync: keep branch develop updated'
           PULL_REQUEST_BODY: 'Custom body of my auto update pull request.'
 ```
+
+# Next steps [to-do]
+New possible features for this action. Ideas are welcome.
+- Include the possibility of including in the description of the automatic PR, which branches or PR's merged into the observed branch.
