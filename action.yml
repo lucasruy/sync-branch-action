@@ -2,6 +2,10 @@ name: 'Sync Branch Action'
 description: 'Action to update branchs automatically.'
 author: 'Lucas Ruy'
 
+branding:
+  icon: git-merge
+  color: purple
+
 inputs:
   GITHUB_TOKEN:
     description: 'User token to be associated with this pull request.'
