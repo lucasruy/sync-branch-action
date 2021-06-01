@@ -1,5 +1,3 @@
-# This is a W.I.P project
-
 ## Sync Branch Action
 [![CI](https://github.com/LucasRuy/sync-branch-action/actions/workflows/ci.yml/badge.svg)](https://github.com/LucasRuy/sync-branch-action/actions/workflows/ci.yml)
 ![PR](https://img.shields.io/badge/PRs-welcome-blue)
