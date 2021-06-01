@@ -1,4 +1,5 @@
 # This is a W.I.P project
+
 ## Sync Branch Action
 An action to automate your branch update process. This action opens a pull request automatically for you whenever there are changes in a branch that you want to observe.
 
