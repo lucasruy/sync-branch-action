@@ -4,7 +4,8 @@
   "description": "Action to update branchs automatically.",
   "main": "index.js",
   "scripts": {
-    "build": "ncc build src/action.js -o dist"
+    "build": "ncc build src/action.js -o dist",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,7 @@
     "@actions/github": "^5.0.0"
   },
   "devDependencies": {
-    "@vercel/ncc": "^0.28.6"
+    "@vercel/ncc": "^0.28.6",
+    "jest": "^27.0.3"
   }
 }
