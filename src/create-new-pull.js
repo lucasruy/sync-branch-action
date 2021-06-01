@@ -18,8 +18,11 @@ const core = require('@actions/core')
  */
  async function createNewPullRequest (octokit, params) {
     const { data: createdPullRequest } = await octokit.rest.pulls.create(params)
+
     core.info(`Pull request #${createdPullRequest.number} created successfully!`)
     core.setOutput("PULL_REQUEST_URL", createdPullRequest.url)
+
+    return createdPullRequest
 }
 
 module.exports = createNewPullRequest
