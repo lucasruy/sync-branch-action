@@ -1,6 +1,7 @@
-# This is a W.I.P project
-
 ## Sync Branch Action
+[![CI](https://github.com/LucasRuy/sync-branch-action/actions/workflows/ci.yml/badge.svg)](https://github.com/LucasRuy/sync-branch-action/actions/workflows/ci.yml)
+![PR](https://img.shields.io/badge/PRs-welcome-blue)
+
 An action to automate your branch update process. This action opens a pull request automatically for you whenever there are changes in a branch that you want to observe.
 
 ## Features
