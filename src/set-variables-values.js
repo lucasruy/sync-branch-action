@@ -9,7 +9,7 @@ const core = require('@actions/core')
  * @param {Object} repository Object with current repository infos.
  * @returns {Object} Returns an object with a set of variables.
  */
-async function setVariablesValues (repository) {
+function setVariablesValues (repository) {
   const PULL_REQUEST_TITLE = core.getInput('PULL_REQUEST_TITLE')
   const PULL_REQUEST_BODY = core.getInput('PULL_REQUEST_BODY')
   const SOURCE_BRANCH = core.getInput('SOURCE_BRANCH')
@@ -23,12 +23,11 @@ async function setVariablesValues (repository) {
   const repo = repository.name
   const owner = repository.owner.login
 
-  const title = PULL_REQUEST_TITLE || `
-    update: ${DESTINATION_BRANCH} to ${SOURCE_BRANCH}
-  `
-  const body = PULL_REQUEST_BODY || `
-    This is an automatic Pull Request to keep ${DESTINATION_BRANCH} up to date with ${SOURCE_BRANCH}! 🔄
-  `
+  const DEFAULT_TITLE = `update: ${DESTINATION_BRANCH} to ${SOURCE_BRANCH}`
+  const DEFAULT_BODY = `This is an automatic Pull Request to keep ${DESTINATION_BRANCH} up to date with ${SOURCE_BRANCH}! 🔄`
+
+  const title = PULL_REQUEST_TITLE || DEFAULT_TITLE
+  const body = PULL_REQUEST_BODY || DEFAULT_BODY
 
   core.info('Setted default values.')
   return {
