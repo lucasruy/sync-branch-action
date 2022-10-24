@@ -8,6 +8,10 @@ const getPullsListByBranch = require('../get-pulls-list')
 
 describe('getPullsListByBranch', () => {
     let params = {}
+    let pullRequestValues = {
+        title: 'Pull request title',
+        body: 'Pull request body'
+    }
 
     beforeAll(() => {
         jest.spyOn(core, 'info').mockImplementation(jest.fn())
@@ -16,10 +20,10 @@ describe('getPullsListByBranch', () => {
         params = {
             head: 'main',
             base: 'develop',
-            body: 'some-body',
             repo: 'some-repo',
             owner: 'some-owner',
-            title: 'some-title',
+            body: 'Pull request body',
+            title: 'Pull request title',
         }
     })
 
@@ -27,15 +31,12 @@ describe('getPullsListByBranch', () => {
         jest.restoreAllMocks()
     })
 
-    test('Get already opened pull request', async () => {
-        const data = await getPullsListByBranch(octokit, params)
-        const expectedValue = {
-            state: "open",
-            title: "Amazing new feature",
-            url: "https://api.github.com/repos/octocat/Hello-World/pulls/134",
-            number: 134,
-        }
+    test('When there is no open sync pull request', async () => {
+        const data = await getPullsListByBranch(octokit, {
+            pullRequestValues,
+            params
+        })
 
-        expect(data).toEqual(expectedValue)
+        expect(data).toEqual(false)
     })
 })
