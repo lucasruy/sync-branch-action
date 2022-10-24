@@ -18,12 +18,15 @@ async function run() {
   try {
     const { repositoryValues, pullRequestValues } = setVariablesValues(repository)
 
-    const openPullRequest = await getPullsListByBranch(octokit, {
-      ...repositoryValues,
-      head: SOURCE_BRANCH,
+    const hasSyncPullRequestOpen = await getPullsListByBranch(octokit, {
+      pullRequestValues,
+      params: {
+        ...repositoryValues,
+        head: SOURCE_BRANCH,
+      }
     })
 
-    if (!openPullRequest) {
+    if (!hasSyncPullRequestOpen) {
       await createNewPullRequest(octokit, {
         ...repositoryValues,
         ...pullRequestValues,
@@ -33,8 +36,7 @@ async function run() {
       return
     }
 
-    core.info(`A pull request has already been opened to update the ${DESTINATION_BRANCH} branch`)
-    core.setOutput("PULL_REQUEST_URL", openPullRequest.url)
+    core.info(`A pull request has already been opened to update the "${DESTINATION_BRANCH}" branch.`)
   } catch (error) {
     core.setFailed(error.message)
   }
