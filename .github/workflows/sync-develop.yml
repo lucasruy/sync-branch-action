@@ -1,4 +1,4 @@
-name: Test
+name: "Sync develop branch"
 
 on:
   push:
@@ -9,10 +9,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Setup environment
+      - name: "Setup environment"
         uses: actions/checkout@v2
 
-      - name: Create update pull request
+      - name: "Create update pull request"
         uses: LucasRuy/sync-branch-action@v1.1.0
         with:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
