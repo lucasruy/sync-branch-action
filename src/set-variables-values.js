@@ -23,7 +23,7 @@ function setVariablesValues (repository) {
   const repo = repository.name
   const owner = repository.owner.login
 
-  const DEFAULT_TITLE = `update: ${DESTINATION_BRANCH} to ${SOURCE_BRANCH}`
+  const DEFAULT_TITLE = `update: sync ${DESTINATION_BRANCH} with ${SOURCE_BRANCH}`
   const DEFAULT_BODY = `This is an automatic Pull Request to keep ${DESTINATION_BRANCH} up to date with ${SOURCE_BRANCH}! 🔄`
 
   const title = PULL_REQUEST_TITLE || DEFAULT_TITLE
