@@ -16,7 +16,8 @@ An action to automate your branch update process. This action opens a pull reque
 | SOURCE_BRANCH | String | true | Branch where you implemented your new code. |
 | DESTINATION_BRANCH | String | true | Branch you want to send your new code. |
 | PULL_REQUEST_TITLE | String | false | Standard title for your update pull request. Default is: `"update: {FROM_BRANCH} to {TO_BRANCH}"` |
-| PULL_REQUEST_BODY | String | false | Content with description for your automated pull. Default is: `"This is an automatic PullRequest to keep {BASE_BRANCH} up to date with {FROM_BRANCH}!"` |
+| PULL_REQUEST_BODY | String | false | Content with description for your automated pull. Default is: `"This is an automatic Pull Request to keep ${DESTINATION_BRANCH} up to date with ${SOURCE_BRANCH}! 🔄"` |
+
 ## Outputs
 |     Name     |     Type    |    Description    |
 | --------------- |    :----:   | ----------------- |
@@ -40,7 +41,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Create update pull request
-        uses: LucasRuy/sync-branch-action@v1.1.0
+        uses: LucasRuy/sync-branch-action@v1.1.1
         with:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           SOURCE_BRANCH: 'main'
@@ -64,7 +65,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Create update pull request
-        uses: LucasRuy/sync-branch-action@v1.1.0
+        uses: LucasRuy/sync-branch-action@v1.1.1
         with:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           SOURCE_BRANCH: 'main'
