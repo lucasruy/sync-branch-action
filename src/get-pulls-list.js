@@ -11,6 +11,7 @@ const core = require('@actions/core')
  * @param {String} values.pullRequestValues Default pull request values
  * @param {String} values.pullRequestValues.title Default pull request title
  * @param {String} values.pullRequestValues.body Default pull request body
+ * @param {String} values.pullRequestValues.label Default pull request label
  * @param {String} values.params Object with values to filter pulls list
  * @param {String} values.params.owner The repository owner user name
  * @param {String} values.params.repo The repository name
