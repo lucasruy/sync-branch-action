@@ -1,11 +1,12 @@
 const core = require('@actions/core')
 
 /**
- * createNewPullRequest
+ * addLabel
  * --------------------
- * Create a new pull request inside your repository based to params passed to this function.
+ * Add label to newly created pull request. In case the label doesn't exist, create it.
  *
  * @param {Instance} octokit Instance of octokit library
+ * @param {Number} prNumber Recently created branch number
  * @param {Object} params Object with params to filter pulls list
  * @property {String} params.owner Repository owner user name
  * @property {String} params.repo Repository name
@@ -14,10 +15,8 @@ const core = require('@actions/core')
  * @property {String} params.label Pull request label
  * @property {String} params.head Branch where you want to pull the new code
  * @property {String} params.base Branch you want to update
- *
- * @returns {Object} Object with opened pull request or undefined.
  */
-async function addLabel ({octokit, params, prNumber}) {
+async function addLabel({octokit, params, prNumber}) {
   const {owner, repo, label} = params;
   const {data} = await octokit.rest.issues.getLabel({owner, repo, name: label})
 
