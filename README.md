@@ -11,14 +11,14 @@ An action to automate your branch update process. This action opens a pull reque
  - If `label` is provided and doesn't exist in the repository, action creates missing label. 
 
 ## Inputs
-| Name               |     Type    |   Required  | Description                                                                                                                                                           |
-|--------------------|    :----:   |    :----:   |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| GITHUB_TOKEN       |    String   |     true    | User token to be associated with this pull request.                                                                                                                   |
-| SOURCE_BRANCH      | String | true | Branch where you implemented your new code.                                                                                                                           |
-| DESTINATION_BRANCH | String | true | Branch you want to send your new code.                                                                                                                                |
-| PULL_REQUEST_TITLE | String | false | Standard title for your update pull request. Default is: `"update: sync ${DESTINATION_BRANCH} with ${SOURCE_BRANCH}`                                                  |
-| PULL_REQUEST_BODY  | String | false | Content with description for your automated pull. Default is: `"This is an automatic Pull Request to keep ${DESTINATION_BRANCH} up to date with ${SOURCE_BRANCH}! 🔄"` |
-| PULL_REQUEST_LABEL | String | false | Label for your automated pull. Default is: `""`                    |
+| Name               |  Type   | Required | Description                                                                                                                                                            |
+|--------------------|:-------:|:--------:|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| GITHUB_TOKEN       | String  |   true   | User token to be associated with this pull request.                                                                                                                    |
+| SOURCE_BRANCH      | String  |   true   | Branch where you implemented your new code.                                                                                                                            |
+| DESTINATION_BRANCH | String  |   true   | Branch you want to send your new code.                                                                                                                                 |
+| PULL_REQUEST_TITLE | String  |  false   | Standard title for your update pull request. Default is: `"update: sync ${DESTINATION_BRANCH} with ${SOURCE_BRANCH}`                                                   |
+| PULL_REQUEST_BODY  | String  |  false   | Content with description for your automated pull. Default is: `"This is an automatic Pull Request to keep ${DESTINATION_BRANCH} up to date with ${SOURCE_BRANCH}! 🔄"` |
+| PULL_REQUEST_LABEL | String  |  false   | Label for your automated pull. Default is: `""`                                                                                                                        |
 
 ## Outputs
 |     Name     |     Type    |    Description    |
