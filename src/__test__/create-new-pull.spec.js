@@ -20,6 +20,7 @@ describe('createNewPullRequest', () => {
             repo: 'some-repo',
             owner: 'some-owner',
             title: 'some-title',
+            label: 'ci'
         }
     })
 
@@ -30,9 +31,10 @@ describe('createNewPullRequest', () => {
     test('Create a new pull request', async () => {
         const data = await createNewPullRequest(octokit, params)
         const expectedValue = {
-            number: 134,
-            url: 'https://api.github.com/repos/octocat/Hello-World/pulls/134',
-            title: "Amazing new feature",
+            number: 1,
+            url: 'https://api.github.com/repos/sbsrnt/Hello-World/pulls/1',
+            title: "Update README",
+            labels: ['ci']
         }
 
         expect(data).toEqual(expectedValue)

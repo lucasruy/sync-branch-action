@@ -1,5 +1,5 @@
 name: 'Sync Branch Action'
-description: 'Action to update branchs automatically.'
+description: 'Action to update branches automatically.'
 author: 'Lucas Ruy'
 
 branding:
@@ -22,11 +22,14 @@ inputs:
   PULL_REQUEST_BODY:
     description: 'Content with description for your automated pull. Default is: "This is an automatic PullRequest to keep {BASE_BRANCH} up to date with {FROM_BRANCH}!"'
     required: false
+  PULL_REQUEST_LABEL:
+    description: 'Pull Request label. Default is: ""'
+    required: false
 
 outputs:
   PULL_REQUEST_URL:
     description: "The url of the generated pull request."
 
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/index.js'
