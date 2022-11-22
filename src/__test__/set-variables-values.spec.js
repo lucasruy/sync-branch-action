@@ -11,6 +11,7 @@ describe('setVariablesValues', () => {
         jest.spyOn(core, 'getInput').mockImplementation((inputName) => {
             if (inputName == 'PULL_REQUEST_TITLE') return 'Pull request title';
             if (inputName == 'PULL_REQUEST_BODY') return 'Pull request body';
+            if (inputName == 'PULL_REQUEST_LABEL') return 'ci';
             if (inputName == 'SOURCE_BRANCH') return 'develop';
             if (inputName == 'DESTINATION_BRANCH') return 'main';
         })
@@ -36,7 +37,8 @@ describe('setVariablesValues', () => {
             },
             pullRequestValues: {
                 title: 'Pull request title',
-                body: 'Pull request body'
+                body: 'Pull request body',
+                label: 'ci'
             }
         }
 

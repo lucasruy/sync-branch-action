@@ -10,7 +10,8 @@ describe('getPullsListByBranch', () => {
     let params = {}
     let pullRequestValues = {
         title: 'Pull request title',
-        body: 'Pull request body'
+        body: 'Pull request body',
+        label: 'ci'
     }
 
     beforeAll(() => {
@@ -24,6 +25,7 @@ describe('getPullsListByBranch', () => {
             owner: 'some-owner',
             body: 'Pull request body',
             title: 'Pull request title',
+            label: 'ci'
         }
     })
 
