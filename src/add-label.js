@@ -37,7 +37,7 @@ async function addLabel({octokit, params, prNumber}) {
     owner,
     repo,
     issue_number: prNumber,
-    labels
+    labels: [labels]
   })
 
   core.info(`Label "${labels}" added successfully to pull request #${prNumber}!`)
