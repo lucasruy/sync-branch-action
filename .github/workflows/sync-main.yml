@@ -1,9 +1,9 @@
-name: "Sync develop branch"
+name: "Sync main branch"
 
 on:
   push:
     branches:
-      - main
+      - develop
 
 jobs:
   test:
@@ -16,5 +16,5 @@ jobs:
         uses: LucasRuy/sync-branch-action@v1.1.1
         with:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          SOURCE_BRANCH: 'main'
-          DESTINATION_BRANCH: 'develop'
+          SOURCE_BRANCH: 'develop'
+          DESTINATION_BRANCH: 'main'
