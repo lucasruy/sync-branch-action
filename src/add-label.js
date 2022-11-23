@@ -31,14 +31,16 @@ async function addLabel({octokit, params, prNumber}) {
     newLabel = title;
   }
 
+  const labels = data?.label ? label : newLabel
+
   await octokit.rest.issues.addLabels({
     owner,
     repo,
     issue_number: prNumber,
-    labels: [data.label ? label : newLabel]
+    labels
   })
 
-  core.info(`Label "${data.label ? label : newLabel}" added successfully to pull request #${prNumber}!`)
+  core.info(`Label "${labels}" added successfully to pull request #${prNumber}!`)
 }
 
 module.exports = addLabel
