@@ -43,7 +43,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Create update pull request
-        uses: LucasRuy/sync-branch-action@v1.1.1
+        uses: LucasRuy/sync-branch-action@v1.2.0
         with:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           SOURCE_BRANCH: 'main'
@@ -67,7 +67,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Create update pull request
-        uses: LucasRuy/sync-branch-action@v1.1.1
+        uses: LucasRuy/sync-branch-action@v1.2.0
         with:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           SOURCE_BRANCH: 'main'
